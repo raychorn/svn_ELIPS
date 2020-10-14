@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:mob="openplug.elips.controls.*">
+	<mx:Script>
+		<![CDATA[
+			[Bindable]
+			private var _required:Boolean = false;
+			
+			public function set is_required(required:Boolean):void {
+				if (this._required != required) {
+					this._required = required;
+				}
+			}
+			
+			public function get is_required():Boolean {
+				return this._required;
+			}
+
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%">
+		<mx:Label id="field_label" text="Email Address: " fontWeight="bold" paddingLeft="5" paddingRight="5"/>
+		<mob:TextInput id="txtEmailAddress" width="100%" height="30" text=""/>
+		<mx:Label id="field_required" text="*" paddingLeft="5" styleName="UserEntryRequiredField" visible="{this._required}" includeInLayout="{this._required}"/>
+	</mx:HBox>
+</mx:Canvas>

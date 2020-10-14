@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mob:ScreenStackApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
+							layout="absolute" 
+							navBarStyleName="styleBlack"
+							xmlns:mob="openplug.elips.controls.*" 
+							xmlns:scr="openplug.elips.controls.screenClasses.*" 
+							creationComplete="init()" 
+							xmlns:local="*"
+							backgroundColor="#474747" backgroundAlpha="0.25"
+							advertisementPosition="top" xmlns:controls="controls.*">
+	<mx:Script>
+		<![CDATA[
+			import com.utils.RESTAPI;
+			import com.utils.StringUtils;
+			
+			import mx.events.CloseEvent;
+			
+			import openplug.elips.controls.Alert;
+			
+			private var _isLoggedIn:Boolean = false;
+
+			[Bindable]
+			private var _product_title:String = 'Social Media Hax v1.0';
+			
+			[Bindable]
+			private var _product_copyright:String = 'Copyright 2010 Vyper Logix Corp.,\nhttp://www.VyperLogix.Com and http://RayCHorn.Com,\nAll Rights Reserved\nexcept where specifically stated otherwise.';
+			
+			[Bindable]
+			private var buttonSize:int = 25;
+			
+			private const _required_fields_statement:String = 'Fields marked with a "*" are "Required".';
+			
+			private function init():void {
+				if ( ((this._isLoggedIn is Boolean) == false) || (this._isLoggedIn == false) ) {
+					this.goToScreen('Login');
+				}
+				this.setFocus();
+			}
+
+			private function get login_form_has_required_fields():Boolean {
+				return this.field_UserName_login.is_required || this.field_Password_login.is_required;
+			}
+
+			private function onTouchTap_btn_ShowRegister(event:TouchEvent):void {
+				this.goToScreen('Register');
+			}
+
+			private function onTouchTap_btn_ShowLogin(event:TouchEvent):void {
+				this.goBack('Login');
+			}
+
+			private function onTouchTap_btn_DoLogin(event:TouchEvent):void {
+				var _this:* = this;
+				var username:String = this.field_UserName_login.txtUserName.text;
+				var isUserNameValid:Boolean = (username is String) && (username.length >= 3) && (StringUtils.isUserName(username));
+				var password:String = this.field_Password_login.txtPassword.text;
+				var isPasswordValid:Boolean = (password is String) && (password.length >= 8) && (StringUtils.isPassword(password));
+				if ( (isUserNameValid) && (isPasswordValid) ) {
+					var endpoint:String = RESTAPI.rest_login_endpoint + StringUtils.urlEncode(username) + '/' + StringUtils.urlEncode(password);
+					trace('onTouchTap_btn_DoLogin().1 --> endpoint='+endpoint);
+					// BEGIN: Simulation code - comment this out for production...
+					Alert.show(username+'\n\n'+password+'\n\n'+endpoint, 'INFO --> onTouchTap_btn_DoLogin().1',Alert.YES|Alert.NO,null,function (event:CloseEvent):void {
+						if (event.detail == Alert.YES) {
+							_this._isLoggedIn = true;
+							_this.goBack('MainScreen');
+						}
+					});
+					// END!  Simulation code - comment this out for production...
+				} else if (!isUserNameValid) {
+					Alert.show('The User Name you entered is not valid and must be corrected before you can login.', 'WARNING');
+				} else if (!isPasswordValid) {
+					Alert.show('The Password you entered is not valid and must be corrected before you can login.', 'WARNING');
+				}
+			}
+
+			private function onTouchTap_btn_DoRegister(event:TouchEvent):void {
+				var username:String = this.field_UserName_register.txtUserName.text;
+				var isUserNameValid:Boolean = (username is String) && (username.length >= 3) && (StringUtils.isUserName(username));
+				var password:String = this.field_Password_register.txtPassword.text;
+				var isPasswordValid:Boolean = (password is String) && (password.length >= 8) && (StringUtils.isPassword(password));
+				var password2:String = this.field_RepeatPassword_register.txtPassword.text;
+				isPasswordValid = ( (isPasswordValid) && (password == password2) );
+				var emailAddress:String = this.field_EmailAddress_register.txtEmailAddress.text;
+				var isEmailAddressValid:Boolean = (emailAddress is String) && (emailAddress.length >= 3) && (StringUtils.isEmailAddress(emailAddress));
+				if ( (isUserNameValid) && (isPasswordValid) && (isEmailAddressValid) ) {
+					var endpoint:String = RESTAPI.rest_register_endpoint + StringUtils.urlEncode(username) + '/' + StringUtils.urlEncode(password) + '/' + StringUtils.urlEncode(emailAddress);
+					trace('onTouchTap_btn_DoRegister().1 --> endpoint='+endpoint);
+					Alert.show(username+'\n\n'+password+'\n\n'+emailAddress+'\n\n'+endpoint, 'INFO --> onTouchTap_btn_DoRegister().1');
+				} else if (!isUserNameValid) {
+					Alert.show('The User Name you entered is not valid and must be corrected before you can register.', 'WARNING');
+				} else if (!isPasswordValid) {
+					Alert.show('The Password you entered is not valid and must be corrected before you can register.', 'WARNING');
+				} else if (!isEmailAddressValid) {
+					Alert.show('The Email Address you entered is not valid and must be corrected before you can register.', 'WARNING');
+				}
+			}
+		]]>
+	</mx:Script>
+	<!-- SoftKey Bottom Bar -->
+	<scr:SoftKeyBarDescriptor id="backSoftKey" leftAction="Back" leftActionClick="goBack()"/>
+
+	<!-- Login Screen -->
+	<mob:ScreenView id="Login" softKeyBarDescriptor="{this.backSoftKey}" clipContent="true" verticalScrollPolicy="auto">
+		<mob:navBarDescriptor>
+			<scr:NavigationBarDescriptor title="Login to the Cloud"/>
+		</mob:navBarDescriptor>
+		<mx:VBox width="100%" height="100%">
+			<mx:Text width="95%" textAlign="center" styleName="titleText" text="{this._product_title}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<mx:Text width="95%" textAlign="center" styleName="titleSubText" text="{'You must Login or Register to continue...'}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<controls:UserNameTextField id="field_UserName_login" styleName="UserEntryField" is_required="true"/>
+			<controls:PasswordTextField id="field_Password_login" label="Password: " styleName="UserEntryField" is_required="true"/>
+			<mx:Canvas width="100%" height="5"/>
+			<mx:Label id="required_fields" text="{this._required_fields_statement}" paddingLeft="{this.width-this.required_fields.width}" styleName="UserEntryRequiredField" visible="{this.login_form_has_required_fields}" includeInLayout="{this.login_form_has_required_fields}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<controls:LoginButton id="button_Login_login" buttonSize="{buttonSize}" handler_touchTap="{this.onTouchTap_btn_DoLogin}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<controls:RegisterButton id="button_Register_login" buttonSize="{buttonSize}" handler_touchTap="{this.onTouchTap_btn_ShowRegister}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<mx:Text width="95%" textAlign="center" text="{'\n\n'+this._product_copyright}"/>
+		</mx:VBox>
+	</mob:ScreenView>
+
+	<!-- Register Screen -->
+	<mob:ScreenView id="Register" softKeyBarDescriptor="{backSoftKey}" clipContent="true" verticalScrollPolicy="auto">
+		<mob:navBarDescriptor>
+			<scr:NavigationBarDescriptor title="Register to use the Cloud"/>
+		</mob:navBarDescriptor>
+		<mx:VBox width="100%" height="100%">
+			<mx:Text width="95%" textAlign="center" styleName="titleText" text="{this._product_title}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<mx:Text width="95%" textAlign="center" fontWeight="bold" text="{'Get Registered...'}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<controls:UserNameTextField id="field_UserName_register"/>
+			<controls:PasswordTextField id="field_Password_register" label="Password: "/>
+			<controls:PasswordTextField id="field_RepeatPassword_register" label="Repeat Password: "/>
+			<controls:EmailAddressTextField id="field_EmailAddress_register"/>
+			<controls:RegisterButton id="button_Register_register" buttonSize="{buttonSize}" handler_touchTap="{this.onTouchTap_btn_DoRegister}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<controls:LoginButton id="button_Login_register" buttonSize="{buttonSize}" handler_touchTap="{this.onTouchTap_btn_ShowLogin}"/>
+			<mx:Canvas width="100%" height="5"/>
+			<mx:Text width="95%" textAlign="center" text="{'\n\n'+this._product_copyright}"/>
+		</mx:VBox>
+	</mob:ScreenView>
+	
+</mob:ScreenStackApplication>

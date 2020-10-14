@@ -1,0 +1,698 @@
+/*
+//------------------------------
+//  Android UI / simul
+//------------------------------
+*/
+
+/*
+//------------------------------
+//  FONTS
+//------------------------------
+*/
+@font-face
+{
+	src: url("elips_styles/simul/DroidSans.ttf");
+	fontFamily: "OP_DroidSans";
+}
+
+@font-face
+{
+	src: url("elips_styles/simul/DroidSans-Bold.ttf");
+	fontFamily: "OP_DroidSans";
+	fontWeight: bold;
+}
+
+/*
+//------------------------------
+//-- global 
+//------------------------------
+*/
+global
+{
+	color: #FFFFFF;
+	fonFamily: "OP_DroidSans";
+	fontSize: 16px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	embedFonts: true;
+	fontAntiAliasType: "advanced";
+	fontGridFitType: "pixel";
+	fontSharpness: -25;
+	fontThickness: 25;
+}
+
+/*
+//------------------------------
+//  Container
+//------------------------------
+*/
+Container 
+{
+	/* not used */
+}
+
+/*
+//------------------------------
+//  Application
+//------------------------------
+*/
+Application
+{
+	/* not used */
+}
+
+/*
+//------------------------------
+//  WindowedApplication
+//------------------------------
+*/
+WindowedApplication
+{
+	backgroundColor: #000000;
+}
+
+/*
+//------------------------------
+//  ScreenStackApplication
+//------------------------------
+*/
+ScreenStackApplication
+{
+	/* inherit from WindowedApplication */
+}
+
+/*
+//------------------------------
+//  ScreenStackApplication
+//------------------------------
+*/
+ScreenStackApplication
+{
+	/* inherit from WindowedApplication */
+}
+
+/*
+//------------------------------
+//  Canvas
+//------------------------------
+*/
+Canvas
+{
+	/* not used */
+}
+
+/*
+//------------------------------
+//  Box
+//------------------------------
+*/
+Box
+{
+	/* not used */
+}
+
+/*
+//------------------------------
+//  HBox
+//------------------------------
+*/
+HBox
+{
+	/* not used */
+}
+
+/*
+//------------------------------
+//  VBox
+//------------------------------
+*/
+VBox
+{
+	/* not used */
+}
+
+/*
+//------------------------------
+//  Button
+//------------------------------
+*/
+Button
+{
+	upSkin : Embed(source="elips_styles/simul/Button_Up.png", 
+		scaleGridTop="21", 
+		scaleGridBottom="22", 
+		scaleGridLeft="16", 
+		scaleGridRight="122");
+	overSkin : Embed(source="elips_styles/simul/Button_Over.png", 
+		scaleGridTop="21", 
+		scaleGridBottom="22", 
+		scaleGridLeft="16", 
+		scaleGridRight="122");
+	downSkin : Embed(source="elips_styles/simul/Button_Down.png", 
+		scaleGridTop="21", 
+		scaleGridBottom="22", 
+		scaleGridLeft="16", 
+		scaleGridRight="122");
+	disabledSkin : Embed(source="elips_styles/simul/Button_Disabled.png", 
+		scaleGridTop="21", 
+		scaleGridBottom="22", 
+		scaleGridLeft="16", 
+		scaleGridRight="122");
+	
+	paddingBottom: 2;
+	paddingLeft: 2;
+	paddingRight: 2;
+	paddingTop: 2;	
+	useRollOver: true;
+	
+	color: #111111;
+	fontSize: 14px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	textAlign: "center";
+}
+
+/*
+//------------------------------
+//  CheckBox
+//------------------------------
+*/
+CheckBox
+{
+	/* skin unchecked */
+	upSkin : Embed(source="elips_styles/simul/CB_Up.png");
+	overSkin : Embed(source="elips_styles/simul/CB_Up.png");
+	downSkin : Embed(source="elips_styles/simul/CB_Selected_Up.png");
+	disabledSkin : Embed(source="elips_styles/simul/CB_Disabled.png");
+	
+	/* skin checked */
+	selectedUpSkin : Embed(source="elips_styles/simul/CB_Selected_Up.png");
+	selectedOverSkin : Embed(source="elips_styles/simul/CB_Selected_Up.png");
+	selectedDownSkin : Embed(source="elips_styles/simul/CB_Up.png");
+	selectedDisabledSkin : Embed(source="elips_styles/simul/CB_Selected_Disabled.png");
+	
+	width: 32;
+	height: 32;
+}
+
+/*
+//------------------------------
+//  RadioButton
+//------------------------------
+*/
+RadioButton
+{
+	/* skin unchecked */
+	upSkin : Embed(source="elips_styles/simul/RB_Up.png");
+	overSkin : Embed(source="elips_styles/simul/RB_Up.png");
+	downSkin : Embed(source="elips_styles/simul/RB_Selected_Up.png");
+	disabledSkin : Embed(source="elips_styles/simul/RB_Disabled.png");
+	
+	/* skin checked */
+	selectedUpSkin : Embed(source="elips_styles/simul/RB_Selected_Up.png");
+	selectedOverSkin : Embed(source="elips_styles/simul/RB_Selected_Up.png");
+	selectedDownSkin : Embed(source="elips_styles/simul/RB_Up.png");
+	selectedDisabledSkin : Embed(source="elips_styles/simul/RB_Selected_Disabled.png");
+	
+	width: 32;
+	height: 32;
+}
+
+/*
+//------------------------------
+//  Alert
+//------------------------------
+*/
+Alert
+{
+	backgroundImage: Embed(source="elips_styles/simul/Alert_Frame.png", 
+		scaleGridTop="124", 
+		scaleGridBottom="125", 
+		scaleGridLeft="143", 
+		scaleGridRight="145");	
+	
+	titleStyleName: "alertTitle";
+	messageStyleName: "alertMessage";
+	buttonStyleName: "alertButtonStyle";
+	
+	color: #FFFFFF;
+	paddingLeft: 6; /* for border */
+	paddingRight: 6; /* for border */
+	paddingTop: 6; /* for border */
+	paddingBottom: 0; /* use the buttonGap !!! */
+	
+	buttonWidth: 138; /* default button width */
+	buttonHeight: 42; /* default button height */
+	buttonGap: 6; /* space beetween buttons */
+	
+	marging: 16; /* space between application border and Alert border x2 */
+	
+	titleX: 16; /* x coordinate of the title */
+	titleY: 16; /* y coordinate of the title */
+	messageX: 24; /* x coordinate of the message */
+	messageY: 68; /* y coordinate of the message */
+	
+	messageButtonGap: 20; /* use for the mask if message is too long */
+}
+
+.alertTitle 
+{
+	fontSize: 22px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	color: #FFFFFF;
+	paddingBottom: 0;
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingTop: 0;
+}
+ 
+.alertMessage 
+{
+	fontSize: 18px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	color: #FFFFFF;
+	paddingBottom: 0;
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingTop: 0;
+}
+
+/*
+//------------------------------
+//  Label
+//------------------------------
+*/
+Label
+{
+	/*styleName: "opLabelStyle";*/
+}
+
+.opLabelStyle
+{
+	color: #FFFFFF;
+	fontSize: 16px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	textDecoration: "none";
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingBottom: 0;
+	paddingTop: 0;
+	textIndent: 0;
+}
+
+/*
+//------------------------------
+//  Text
+//------------------------------
+*/
+Text
+{
+	/*styleName: "opTextStyle";*/
+}
+
+.opTextStyle
+{
+	color: #FFFFFF;
+	fontSize: 16px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	textDecoration: "none";
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingBottom: 0;
+	paddingTop: 0;
+	textIndent: 0;
+}
+
+/*
+//------------------------------
+//  TextInput
+//------------------------------
+*/
+TextInput
+{
+	backgroundColor: #050507;
+	borderColor: #DFDFDF;
+	borderStyle: "Rect";
+	color: #FFFFFF;
+	fontSize: 16px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingBottom: 0;
+	paddingTop: 0;
+	textIndent: 0;
+}
+
+/*
+//------------------------------
+//  TextArea
+//------------------------------
+*/
+TextArea
+{
+	backgroundColor: #050507;
+	borderColor: #DFDFDF;
+	borderStyle: "Rect";
+	color: #FFFFFF;
+	fontSize: 16px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingBottom: 0;
+	paddingTop: 0;
+	textIndent: 0;
+}
+
+/*
+//------------------------------
+//  List
+//------------------------------
+*/
+List
+{
+	textAlign: "left";
+	backgroundColor: #121212;
+	selectionColor: #FFFFFF;
+	dividerColor: #303030;
+	sectionBackgroundColor: #202020;
+	sectionTextColor: #BEBEBE;
+}
+
+ListItemRenderer
+{
+}
+
+/*
+//------------------------------
+//  List - Accessory
+//------------------------------
+*/
+AccessoryDisclosureIndicator
+{
+	backgroundImage: Embed(source="elips_styles/simul/Accessory_Indicator_Disclosure.png");	
+	
+	width: 32;
+	height: 32;
+	
+	explicitWidth: 32;
+	explicitHeight: 32;
+}
+
+AccessoryDetailDisclosureButton
+{
+	backgroundImage: Embed(source="elips_styles/simul/Accessory_Detail_Disclosure.png");	
+	
+	width: 32;
+	height: 32;
+	
+	explicitWidth: 32;
+	explicitHeight: 32;
+}
+
+AccessoryCheckmark
+{
+	backgroundImage: Embed(source="elips_styles/simul/Accessory_Check_Mark.png");	
+	
+	width: 32;
+	height: 32;
+	
+	explicitWidth: 32;
+	explicitHeight: 32;
+}
+
+AccessoryMove
+{
+	upBackgroundImage: Embed(source="elips_styles/simul/Accessory_Move_Up.png");
+	downBackgroundImage: Embed(source="elips_styles/simul/Accessory_Move_Down.png");
+	
+	width: 64;
+	height: 32;
+	
+	explicitWidth: 64;
+	explicitHeight: 32;
+}
+
+EditingPlus
+{
+	backgroundImage: Embed(source="elips_styles/simul/Editing_Plus.png");	
+	
+	width: 32;
+	height: 32;
+	
+	explicitWidth: 32;
+	explicitHeight: 32;
+}
+
+EditingMinus
+{
+	backgroundImage: Embed(source="elips_styles/simul/Editing_Minus.png");	
+	
+	width: 32;
+	height: 32;
+	
+	explicitWidth: 32;
+	explicitHeight: 32;
+}
+
+/*
+//------------------------------
+//  TabNavigator
+//------------------------------
+*/
+TabNavigator
+{	
+	barPosition: "top";
+	navigationBarHeight: 64;
+}
+
+/*
+//------------------------------
+//  ToggleButtonBar
+// in this case we use 
+// a class selector to 
+// permit users to make their
+// own ToggleButtonBar
+//------------------------------
+*/
+.opToggleButtonBarInTabNavigator
+{
+	backgroundImage: Embed(source="elips_styles/simul/TabNavBar_Background.png");
+	
+	firstButtonStyleName: "op_tabNavBarButton";
+	lastButtonStyleName: "tabNavBarButton";
+	buttonStyleName: "tabNavBarButton";
+	buttonSelectedStyleName: "tabNavBarButtonSelected";
+	
+	verticalAlign: "bottom";
+	verticalGap: 0;
+	horizontalAlign: "left";
+	horizontalGap: 0;	
+	
+	paddingBottom: 0;
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingTop: 0;
+		
+}
+
+.tabNavBarButton
+{
+	upSkin: Embed(source="elips_styles/simul/TabNavBar_Button_UnSelected.png", 
+		scaleGridTop="46", 
+		scaleGridBottom="47", 
+		scaleGridLeft="1", 
+		scaleGridRight="2");
+	overSkin: Embed(source="elips_styles/simul/TabNavBar_Button_UnSelected.png", 
+		scaleGridTop="46", 
+		scaleGridBottom="47", 
+		scaleGridLeft="1", 
+		scaleGridRight="2");
+	downSkin: Embed(source="elips_styles/simul/TabNavBar_Button_UnSelected.png", 
+		scaleGridTop="46", 
+		scaleGridBottom="47", 
+		scaleGridLeft="1", 
+		scaleGridRight="2");
+	disabledSkin: Embed(source="elips_styles/simul/TabNavBar_Button_UnSelected.png", 
+		scaleGridTop="46", 
+		scaleGridBottom="47", 
+		scaleGridLeft="1", 
+		scaleGridRight="2");
+	
+	labelPlacement: "bottom";
+	verticalAlign: "bottom";
+	horizontalAlign: "left";
+	
+	horizontalGap: 0;
+	verticalGap: 0;
+	
+	paddingBottom: 2;
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingTop: 2;
+	
+	fontSize: 12px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	color: #FFFFFF;
+}
+
+.tabNavBarButtonSelected
+{
+	selectedUpSkin: Embed(source="elips_styles/simul/TabNavBar_Button_Selected.png", 
+		scaleGridTop="46", 
+		scaleGridBottom="47", 
+		scaleGridLeft="1", 
+		scaleGridRight="2");
+	selectedOverSkin: Embed(source="elips_styles/simul/TabNavBar_Button_Selected.png", 
+		scaleGridTop="46", 
+		scaleGridBottom="47", 
+		scaleGridLeft="1", 
+		scaleGridRight="2");
+	selectedDownSkin: Embed(source="elips_styles/simul/TabNavBar_Button_Selected.png", 
+		scaleGridTop="46", 
+		scaleGridBottom="47", 
+		scaleGridLeft="1", 
+		scaleGridRight="2");
+	selectedDisabledSkin: Embed(source="elips_styles/simul/TabNavBar_Button_Selected.png", 
+		scaleGridTop="46", 
+		scaleGridBottom="47", 
+		scaleGridLeft="1", 
+		scaleGridRight="2");
+	
+	labelPlacement: "bottom";
+	verticalAlign: "bottom";
+	horizontalAlign: "left";
+	
+	horizontalGap: 0;
+	verticalGap: 0;
+	
+	paddingBottom: 2;
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingTop: 2;
+	
+	fontSize: 12px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	color: #7b7d7b;
+}
+/*
+//------------------------------
+//  NavigationBar
+//------------------------------
+*/
+NavigationBar
+{	
+	backgroundImage: Embed(source="elips_styles/simul/TitleBar.png", 
+		scaleGridTop="24", 
+		scaleGridBottom="25", 
+		scaleGridLeft="5", 
+		scaleGridRight="7");
+	/* if we not use a backgroundImage set the drawing values */
+	/*
+	colorScheme: "none";
+	gradientType: "linear";
+	fillColors: #858585, #9B9B9B;
+	alphas: 1.0, 1.0;
+	gradientRatios: 0, 255;
+	separatorColor: #000000;
+	separatorThickness: 0;
+	separatorAlpha: 0.0;
+	*/
+		
+	defaultHeight: 27;
+	
+	paddingBottom: 0;
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingTop: 0;
+	
+	titleStyleName: "navigationBarTitleLabel";
+}
+
+.navigationBarTitleLabel
+{	
+	fontSize: 12px;
+	fontStyle: "normal";
+	fontWeight: "bold";
+	color: #FFFFFF;	
+}
+
+.navigationBarButton
+{
+	upSkin: Embed(source="elips_styles/simul/Button_NavBar_Up.png", 
+		scaleGridTop="12", 
+		scaleGridBottom="13", 
+		scaleGridLeft="16", 
+		scaleGridRight="20");
+	overSkin: Embed(source="elips_styles/simul/Button_NavBar_Up.png", 
+		scaleGridTop="12", 
+		scaleGridBottom="13", 
+		scaleGridLeft="16", 
+		scaleGridRight="20");
+	downSkin: Embed(source="elips_styles/simul/Button_NavBar_Down.png", 
+		scaleGridTop="12", 
+		scaleGridBottom="13", 
+		scaleGridLeft="16", 
+		scaleGridRight="20");
+	disabledSkin: Embed(source="elips_styles/simul/Button_NavBar_Disabled.png", 
+		scaleGridTop="12", 
+		scaleGridBottom="13", 
+		scaleGridLeft="16", 
+		scaleGridRight="20");
+	
+	defaultHeight: 25;
+	
+	fontSize: 13px;
+	fontStyle: "normal";
+	fontWeight: "normal";
+	color: #111111;
+}
+
+/*
+//------------------------------
+//  ScrollerThumb
+//------------------------------
+*/
+VScrollerThumb
+{
+	backgroundImage: Embed(source="elips_styles/simul/VScroller_Thumb.png", 
+		scaleGridTop="3", 
+		scaleGridBottom="7", 
+		scaleGridLeft="2", 
+		scaleGridRight="3");
+}
+HScrollerThumb
+{
+	backgroundImage: Embed(source="elips_styles/simul/HScroller_Thumb.png", 
+		scaleGridTop="2", 
+		scaleGridBottom="3", 
+		scaleGridLeft="3", 
+		scaleGridRight="7");
+}
+
+/*
+//------------------------------
+//  TextEntryView
+//------------------------------
+*/
+opTextEntryView
+{
+	color: #111111;
+	
+	backgroundColor: #FFFFFF;
+	backgroundAlpha: 0.95;
+	borderColor: #f06600;
+	borderAlpha: 1.0;
+	borderThickness: 2;
+	borderRound: 4;	
+}
+
+
+/* -------  EOF  ------- */

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import nativeclasses.NativePlayer;
+			
+			private var player:NativePlayer = new NativePlayer();
+			
+			private function play_music():void {
+				if (player.music_playback()) {
+					currentMusic.text="Playing your music library." 
+				} else {
+					currentMusic.text="Your music library is empty."
+				}
+			}			
+		]]>
+	</mx:Script>
+	<mx:Label id="title" x="0" y="40" width="100%" textAlign="center" text="Hello Music Player" fontSize="16"/>
+	
+	<mx:VBox x="0" y="100" width="100%" horizontalAlign="center" verticalAlign="middle" >
+		<mx:Button id="playMusicButton" height="40" width="200" label="Play my music" fontSize="12" touchTap="play_music()"/>
+		<mx:Label id="currentMusic" text=""/>
+	</mx:VBox>
+</mx:WindowedApplication>

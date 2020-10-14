@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mob:ScreenStackApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
+							layout="absolute" 
+							navBarStyleName="styleBlack"
+							xmlns:mob="openplug.elips.controls.*" 
+							xmlns:scr="openplug.elips.controls.screenClasses.*" 
+							creationComplete="init()" 
+							xmlns:local="*" 
+							advertisementPosition="bottom">
+	<mx:Style>
+		.ListStyle {
+			backgroundAlpha: 1;
+			backgroundColor: #ffff66;
+			alternatingItemColors: #66ffff, #ffff66;
+			rollOverColor: #0066ff;
+			textRollOverColor: #ffffff;
+			borderColor: #333333;
+			dropShadowEnabled: true;
+		}
+	</mx:Style>
+	<mx:Script>
+		<![CDATA[
+			import openplug.elips.controls.Alert;
+			import openplug.elips.events.ItemTouchTapEvent;
+			import openplug.elips.services.SystemAPI;
+
+			[Embed(source="header.gif")]
+			[Bindable]
+			public var imgHeaderCls:Class;
+			
+			[Bindable]
+			private var _product_title:String = 'RSS Companion';
+			
+			[Bindable]
+			private var _product_copyright:String = 'Copyright 2010 Vyper Logix Corp.,\nhttp://www.VyperLogix.Com and http://RayCHorn.Com,\nAll Rights Reserved except where specifically stated otherwise.';
+			
+			[Bindable]
+			private var buttonSize:int = 25;
+			
+			private var slideTimer:Timer;
+			private var slideCurrent:int = 0;
+
+			private function init():void {
+				slideTimer = new Timer(3000, 0);
+				slideTimer.addEventListener(TimerEvent.TIMER, slideTimeout);
+
+				setFocus();
+			}
+
+			private function slideTimeout(evt:TimerEvent):void {
+				slideShowIterate();
+			}
+
+			private function slideShowIterate():void {
+				
+				if (slideCurrent < (slideCollection.length - 1)) {
+					slideCurrent ++;
+				} else {
+					slideCurrent = 0;
+				}
+				
+				if (slideShow != null) {
+					slideShow.source = slideCollection[slideCurrent].data;
+					fadeIn.play([slideShow]);
+				}
+			}
+
+			private function onWidgetSelect(evt:ItemTouchTapEvent):void {
+				if (evt.item.screen_id is String) {
+					goToScreen(evt.item.screen_id);
+				} else {
+					Alert.show(evt.item.data, 'INFO --> onWidgetSelect');
+				}
+			}
+			
+			private function onTextEntryComplete(e:Event):void {
+				txtEntry.text = SystemAPI.textEntryString;
+				SystemAPI.dispatcher.removeEventListener("textEntry", onTextEntryComplete);
+			}
+			
+			private function stop_activity_animation():void {
+				this.activity.stop();
+				this.activity.visible = this.activity.includeInLayout = false;
+			}
+			
+			private function start_activity_animation():void {
+				this.activity.start();
+				this.activity.visible = this.activity.includeInLayout = true;
+			}
+			
+			private function onComplete_imgLoader(event:*):void {
+				this.stop_activity_animation();
+			}
+			
+			private function onIOError_imgLoader(event:*):void {
+				this.stop_activity_animation();
+			}
+		]]>
+	</mx:Script>
+
+	<!-- SlideShow Item Collection-->
+	<mx:ArrayCollection id="slideCollection">
+		<mx:Object data="911.gif"/>
+		<mx:Object data="458.gif"/>
+		<mx:Object data="rapide.gif"/>
+	</mx:ArrayCollection>
+
+	<!-- Custom Animation -->
+	<mx:Fade id="fadeIn" duration="1000" alphaFrom="0.0" alphaTo="1.0"/>
+	<mx:Sequence id="animateScaleXUpDown" >
+		<mx:AnimateProperty property="x" fromValue="40" toValue="140" duration="200" />
+		<mx:AnimateProperty property="x" fromValue="140" toValue="40" duration="600" />
+	</mx:Sequence>
+
+	<!-- Main Menu Item Collection-->
+	<mx:ArrayCollection id="widgetsCollection">
+		<mx:Object id="firstObj" label="Feed #1" screen_id="Text" data="http://blah-blah-blah.com/rss/"/>
+		<mx:Object label="Feed #2" data="http://feed2.com" screen_id="Image"/>
+		<mx:Object label="Feed #3" data="http://feed3.com"/>
+		<mx:Object label="Feed #4" data="http://feed4.com"/>
+		<mx:Object label="Feed #5" data="http://feed5.com"/>
+	</mx:ArrayCollection>
+	
+	<!-- Android Menu Item Collection-->
+	<mx:ArrayCollection id="menu1">
+		<scr:MenuItem actionClick="Alert.show(this._product_copyright, 'About '+this._product_title);" label="About" icon="@Embed('info.png')"/>
+	</mx:ArrayCollection>
+	
+	<!-- SoftKey Bottom Bar -->
+	<scr:SoftKeyBarDescriptor id="backSoftKey" leftAction="Back" leftActionClick="goBack()"/>
+
+	<!-- iPhone Top Navigation Bar -->
+	<scr:NavigationBarDescriptor title="{this._product_title}" id="baseNavBar" styleName="styleBlue"/>
+	<!-- Main Screen -->
+	
+	<mob:ScreenView id="Base" softKeyBarStatus="none" navBarDescriptor="{this.baseNavBar}" menuProvider="{this.menu1}" clipContent="true" verticalScrollPolicy="auto">
+		<mob:TabNavigator id="mainTab" width="100%" height="100%">
+			<mx:VBox width="100%" height="100%" horizontalGap="0" verticalGap="0" label="Main" icon="@Embed('main.png')">
+				<mx:HBox excludeFromPlatform="iPhone OS 3.0" horizontalAlign="center" verticalAlign="middle" horizontalGap="0" id="Header" width="100%" height="{height/10}" backgroundImage="{this.imgHeaderCls}">
+					<mx:Label width="10%" text=" " fontSize="17" color="white"/>
+					<mx:Label textAlign="center" width="80%" id="title" text="{this._product_title}" fontSize="17" color="white"/>
+					<mx:Label width="10%" text="x" fontSize="20" color="white" touchTap="exit()"/>
+				</mx:HBox>
+				<mob:List id="widgetsList" showSelection="true" backgroundColor="blue" backgroundAlpha="0.25"
+						  dataProvider="{widgetsCollection}" rowHeight="{height/10}" itemRenderer="WidgetsListRenderer" width="100%" height="100%" itemTouchTap="onWidgetSelect(event)"/>
+			</mx:VBox>
+			<mx:VBox id="helpBox" width="100%" height="100%" horizontalGap="0" verticalGap="0" horizontalAlign="center" label="Info" icon="@Embed('info.png')" backgroundColor="white">
+				<mx:HBox id="helpTitle" excludeFromPlatform="iPhone OS 3.0" horizontalAlign="center" verticalAlign="middle" horizontalGap="0" width="100%" height="{height/10}" backgroundImage="header.gif">
+					<mx:Label width="10%" text=" " fontSize="17" color="white"/>
+					<mx:Label text="Info" width="80%" textAlign="center" fontSize="17" color="white"/>
+					<mx:Label width="10%" text="x" fontSize="20" color="white" touchTap="exit()"/>
+				</mx:HBox>
+				<mx:Canvas height="100%" width="100%" clipContent="true" verticalScrollPolicy="auto">
+					<mx:VBox width="100%" height="100%" horizontalGap="0" verticalGap="0" horizontalAlign="center">
+						<mx:HBox  width="95%" horizontalAlign="center" verticalAlign="middle" horizontalGap="5" verticalGap="5">
+							<mx:Text fontWeight="bold" text="{'UI Catalog for '}"/> 
+							<mx:Image source="platform.png"/>
+						</mx:HBox>	    		
+						<mx:Text width="95%" textAlign="center" text="{'\n'+this._product_title+' was written by Ray C Horn and published by Vyper Logix Corp. for the Android Market.\n\n'+this._product_copyright}"/>
+					</mx:VBox>
+				</mx:Canvas>
+			</mx:VBox>
+		</mob:TabNavigator>
+	</mob:ScreenView>
+
+	<!-- Text controls Screen -->
+	<mob:ScreenView id="Text" softKeyBarDescriptor="{backSoftKey}" clipContent="true" verticalScrollPolicy="auto">
+		<mob:navBarDescriptor>
+			<scr:NavigationBarDescriptor title="Text Fields"/>
+		</mob:navBarDescriptor>
+		<mx:VBox width="100%" height="100%">
+			<mx:Canvas width="100%">
+				<mx:Label x="5" y="0" text="&lt;mx:Label&gt;" fontWeight="bold"/>
+				<mx:Label id="txtLabel" x="40" y="20" text="single line non-editable text" width="{width-65}"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%">
+				<mx:Label x="5" y="0" text="&lt;mx:Text&gt;" fontWeight="bold"/>
+				<mx:Canvas verticalScrollPolicy="auto" clipContent="true" x="40" y="20" width="{width-65}">
+					<mx:Text id="txtText" width="100%" text="multi-line text that wraps when the text is too long"/>
+				</mx:Canvas>
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%">
+				<mx:Label x="5" y="0" text="&lt;mob:TextInput&gt;" fontWeight="bold"/>
+				<mx:VBox width="100%" x="40" y="20">
+					<local:CommentText text="When tapping the textFields below, a keyboard will appear allowing you to modify the text. The modification of the 1st text field will affect the mx:Label above. The second one works as a password entry." />
+					<mob:TextInput id="txtInput" width="{width-65}" height="30" text="" textChanged="txtLabel.text=txtInput.text"/>
+					<mob:TextInput id="txtInputPW" width="{width-65}" height="30" text="Password" displayAsPassword="true" />
+				</mx:VBox>
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%">
+				<mx:Label x="5" y="0" text="&lt;mob:TextArea&gt;" fontWeight="bold"/>
+				<mx:VBox width="100%" x="40" y="20">
+					<local:CommentText text="When tapping the textField below, a keyboard will appear allowing you to modify the text. The text modification will affect the mx:Text above. Tap the 'Change Style' button to see the text colored in red highlighted in yellow." />
+					<mob:TextArea id="txtArea" width="{width-65}" height="100" text=" ALICE was beginning to get very tired of sitting by her sister on the bank and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice, 'without pictures or conversations?'" textChanged="txtText.text=txtArea.text" autoCapitalization="None" autoCorrection="false"/>
+					<mx:Button width="150" height="{buttonSize}" label="Change style" touchTap="txtArea.styleName='txtStyle'"/>
+					<mx:Canvas id="txtAreaNativeOptions" visible="false" width="150" height="25">
+						<mx:Button x="0" width="50" height="{buttonSize}" label="OK" touchTap="txtArea.validateText()"/>
+						<mx:Button x="50" width="50" height="{buttonSize}" label="Cap" touchTap="txtArea.autoCapitalization='Sentences'"/>
+						<mx:Button x="100" width="50" height="{buttonSize}" label="Cor" touchTap="txtArea.autoCorrection=true"/>
+					</mx:Canvas>
+				</mx:VBox>
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%">
+				<mx:Label x="5" y="0" text="SystemAPI.getEntryString" fontWeight="bold"/>
+				<mx:VBox width="100%" x="40" y="20">
+					<local:CommentText text="Tap the 'Show Text Entry' button to invoke a textField and a keyboard. You can then edit your text. By tapping 'OK' button, you should see the text your entered below the 'Show Text Entry' button. By tapping 'Cancel' button, you cancel your modifications." />
+					<mx:Button height="{buttonSize}" label="Show Text Entry" touchTap="SystemAPI.dispatcher.addEventListener('textEntry', onTextEntryComplete); SystemAPI.getEntryString('Text Entry:', false)"/>
+					<mx:Label id="txtEntry" text="Text Entry:"/>
+				</mx:VBox>
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%" excludeFromPlatform="iPhone OS 3.0">
+				<mx:Label x="5" y="0" text="flash.events.KeyboardEvent" fontWeight="bold"/>
+				<mx:VBox width="100%" x="40" y="20">
+					<local:CommentText text="Press a Key and its ID will be displayed in the label below." />
+					<mx:Label id="txtKey" text="Press a Key"/>
+				</mx:VBox>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="5"/>
+		</mx:VBox>
+	</mob:ScreenView>
+	
+	<!-- Image controls Screen -->
+	<mob:ScreenView id="Image" softKeyBarDescriptor="{backSoftKey}" clipContent="true" verticalScrollPolicy="auto">
+		<mob:navBarDescriptor>
+			<scr:NavigationBarDescriptor title="Image"/>
+		</mob:navBarDescriptor>
+		<mx:VBox width="100%" height="100%">
+			<mx:Canvas width="100%">
+				<mx:Label x="5" y="0" text="&lt;mx:Image&gt;" fontWeight="bold"/>
+				<mx:VBox width="100%" x="40" y="20">
+					<local:CommentText text="Tap the 'Start SlideShow' button to start the slide show. You should see a new image (among 3) every 3 seconds. Hit again the 'Start SlideShow' button to change image before the 3 seconds. Hit the 'Stop SlideShow' button to stop the slide show." />
+					<mx:Image id="slideShow" width="160" height="120" source="911.gif" showEffect="fadeIn"/>
+					<mx:Button width="160" height="{buttonSize}" label="Start SlideShow" touchTap="slideShowIterate(); slideTimer.start();"/>
+					<mx:Button width="160" height="{buttonSize}" label="Stop SlideShow" touchTap="slideTimer.stop();"/>						
+				</mx:VBox>
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%">
+				<mx:Label x="40" y="0" text="AspectRatio:"/>
+				<mx:Image x="40" y="20" width="100" height="40" source="meteo.gif" maintainAspectRatio="true"/>
+				<mx:Image x="40" y="40" width="100" height="40" source="meteo.gif" maintainAspectRatio="false"/>
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+				<mx:Label x="40" y="0" text="Click below image to animate:"/>
+				<mx:Image x="40" y="20" width="100" height="60" id="anim" scaleContent="true" touchTap="{animateScaleXUpDown.play([anim])}" source="game.gif"/>
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%">
+				<mx:Label x="40" y="0" text="Remote image:"/>
+				<mx:VBox width="100%" x="40" y="20">
+					<local:CommentText text="Tap the 'Upload' button to upload an image. After few seconds, you should see, the OpenPlug logo below the 'upload' button." />
+					<mx:HBox width="100%">
+						<mx:Button width="100" height="{buttonSize}" label="Upload" touchTap="this.start_activity_animation(); this.imgLoader.load();"/>
+						<mob:ActivityIndicator width="25" height="25" id="activity" visible="false" includeInLayout="false" autoStart="false"/>
+					</mx:HBox>
+					<mx:SWFLoader id="imgLoader" autoLoad="false" width="{width-65}" source="http://developer.openplug.com/templates/openplug/images/header/logo-open-plug.jpg" complete="onComplete_imgLoader(event)" ioError="onIOError_imgLoader(event)"/>
+				</mx:VBox>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="5"/>
+		</mx:VBox>
+	</mob:ScreenView>
+	
+</mob:ScreenStackApplication>

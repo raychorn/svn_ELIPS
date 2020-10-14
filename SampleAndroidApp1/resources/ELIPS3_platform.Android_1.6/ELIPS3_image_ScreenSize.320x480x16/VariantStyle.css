@@ -1,0 +1,24 @@
+/* CSS file for Android 320x480 */
+Button
+{
+	fontSize: 11;
+}
+
+Label
+{
+	fontSize: 14;
+}
+
+.lstStyle
+{
+	selectionColor:  dark-gray;
+	fontWeight: bold;
+}
+
+.comments
+{
+	color: white;
+	fontSize:12;
+	fontWeight: bold;
+	fontStyle: italic;
+}

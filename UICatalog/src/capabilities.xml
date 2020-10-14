@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Device Name="Generic Android 480x800">
+<Manufacturer Name="Generic"/>
+<Model Name="Generic Android 480x800"/>
+<Sensors Rotation="UIN_ON"/>
+<Platform Name="Android 1.6" Vendor="Google" Version="1.6"/>
+<Screens>
+<Screen Height="800" Name="Default_Front_UOUT_S_FRONT" Width="480" id="1"/>
+</Screens>
+</Device>
+

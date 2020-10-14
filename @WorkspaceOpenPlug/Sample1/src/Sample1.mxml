@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:mob="openplug.elips.controls.*" layout="absolute">
+	<!--Text -->
+	<mob:Text width="50%" x="{width/4}" y="{height/3}" text="With ELIPS Studio, say Hello to the Mobile World!" textAlign="center"/> 
+</mx:WindowedApplication>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import openplug.elips.controls.Alert;
+
+			[Bindable]
+			private var _handler_touchTap:Function;
+			
+			[Bindable]
+			private var _buttonSize:Number;
+			
+			public function set handler_touchTap(handler_touchTap:Function):void {
+				if (this._handler_touchTap != handler_touchTap) {
+					this._handler_touchTap = handler_touchTap;
+				}
+			}
+			
+			public function get handler_touchTap():Function {
+				return this._handler_touchTap;
+			}
+			
+			public function set buttonSize(buttonSize:Number):void {
+				if (this._buttonSize != buttonSize) {
+					this._buttonSize = buttonSize;
+				}
+			}
+			
+			public function get buttonSize():Number {
+				return this._buttonSize;
+			}
+
+			protected function btn_Register_creationCompleteHandler(event:FlexEvent):void {
+				var btn:Button = event.currentTarget as Button;
+				if (this._handler_touchTap is Function) {
+					btn.addEventListener(TouchEvent.TOUCH_TAP, this._handler_touchTap);
+				} else {
+					Alert.show('Missing an event handler for btn_Register_creationCompleteHandler !', 'WARNING');
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:Button id="btn_Register" height="{this._buttonSize}" label="Register" creationComplete="btn_Register_creationCompleteHandler(event)"/>
+	</mx:HBox>
+</mx:Canvas>

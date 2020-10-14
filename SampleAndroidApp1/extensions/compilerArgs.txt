@@ -1,0 +1,25 @@
+-air
+-appname
+SampleAndroidApp1
+-sdk
+C:/OpenPlug/My Environments/ELIPS_3_0_1_384/ElipsFlexSDK
+-opts
+-locale en_US
+-output
+F:/Flash Builder 4/SampleAndroidApp1/extensions
+-mxml
+F:/Flash Builder 4/SampleAndroidApp1/src/SampleAndroidApp1.mxml
+-srcpath
+F:/Flash Builder 4/SampleAndroidApp1/src
+-libfile
+C:/OpenPlug/My Environments/ELIPS_3_0_1_384/ElipsFlexSDK/frameworks/projects/ElipsAsCore/bin/ElipsAsCore.swc
+-libfile
+C:/OpenPlug/My Environments/ELIPS_3_0_1_384/ElipsFlexSDK/frameworks/projects/ElipsFlashPlayer/bin/ElipsFlashPlayer.swc
+-libfile
+C:/OpenPlug/My Environments/ELIPS_3_0_1_384/ElipsFlexSDK/frameworks/projects/ElipsFlexFramework/bin/ElipsFlexFramework.swc
+-libfile
+C:/OpenPlug/My Environments/ELIPS_3_0_1_384/ElipsFlexSDK/frameworks/projects/ElipsFlexServices/bin/ElipsFlexServices.swc
+-extension
+Android 1.6;java
+-extdir
+C:/OpenPlug/My Environments/ELIPS_3_0_1_384/Src/native_mapping
